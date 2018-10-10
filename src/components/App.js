@@ -15,8 +15,12 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className='App'>
+            <div className='App testStyle'>
                 {this.state.body}
+                <br/>
+                <code className='subStyle'>
+                    Some awesome code.
+                </code>
             </div>
         );
     }
