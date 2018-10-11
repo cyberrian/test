@@ -8,22 +8,18 @@ import express from 'express';
 const server = express();
 
 server.use(sassMiddleware({
-    src: path.join(__dirname, 'sass'), // specifies where to read *.scss file from; starting from current directory, join sass dir
-    dest: path.join(__dirname, 'public/stylesheets'), // specifies where to write generated css
-    outputStyle: 'compressed',
-    prefix: '/public/stylesheets' // where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+    src: path.join(__dirname, 'sass'), // specifies where to read *.scss file from
+    dest: path.join(__dirname, 'public/stylesheets'), // specifies where to generated css
+    outputStyle: 'compressed'
 }));
 
+// api route
 server.use('/api', apiRouter);
-server.use(express.static(path.join(__dirname, 'public'))); // shortcut to below, to serve static html from public dir
-/* Long-winded way to serve static html
-server.get('/about.html', (req, res) => {
-    fs.readFile('./about.html', (err, data) => {
-        res.send(data.toString());
-    });
-});
-*/
 
-server.listen(config.port, () => {
+// route root and /public to public dir
+server.use('/', express.static(path.join(__dirname, '/public')));
+server.use('/public', express.static(path.join(__dirname, 'public')));
+
+server.listen(config.port, config.host, () => {
     console.info(`Express listening on port ${config.port}`);
 });

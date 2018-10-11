@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export default class App extends Component {
     state = {
-        body: 'App content'
+        ajaxData: {}
     };
 
     componentDidMount() {
         console.log('did mount');
+        axios.get('/api/data')
+            .then(resp => {
+                console.log('Got data from /api/data', resp);
+                this.setState({ajaxData: resp.data});
+            })
+            .catch(console.error);
     }
 
     componentWillUnmount() {
@@ -16,11 +23,12 @@ export default class App extends Component {
     render() {
         return (
             <div className='App testStyle'>
-                {this.state.body}
-                <br/>
-                <code className='subStyle'>
-                    Some awesome code.
-                </code>
+                <h2>Test AJAX data:</h2>
+                <pre>
+                    <code className='subStyle'>
+                        { JSON.stringify(this.state.ajaxData, null, '\t') }
+                    </code>
+                </pre>
             </div>
         );
     }
