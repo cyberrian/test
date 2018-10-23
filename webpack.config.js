@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './src/index.js',
+    entry: ['./src/index.js'],
     output: {
         path: __dirname + '/public',
         filename: 'bundle.js'
@@ -8,9 +8,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                use: [
-                    { loader: 'babel-loader' }
-                ],
+                use: 'babel-loader',
                 exclude: /node_modules/
             }
         ]

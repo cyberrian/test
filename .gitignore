@@ -39,3 +39,4 @@ public/bundle.js
 public/bundle.js.map
 server - using http, https modules.js
 server - serving static file.js
+dist/*

@@ -1,34 +1,22 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import {joinClassNames} from './utils';
+import SearchSessionScreen from '../screens/SearchSessionScreen';
 
 export default class App extends Component {
-    state = {
-        ajaxData: {}
+    static propTypes = {
+        /**
+         * Native React prop to add css class.
+         */
+        className: PropTypes.string
     };
-
-    componentDidMount() {
-        console.log('did mount');
-        axios.get('/api/data')
-            .then(resp => {
-                console.log('Got data from /api/data', resp);
-                this.setState({ajaxData: resp.data});
-            })
-            .catch(console.error);
-    }
-
-    componentWillUnmount() {
-        console.log('will unmount');
-    }
-
+    
     render() {
+        const {className, ...props} = this.props;
+
         return (
-            <div className='App testStyle'>
-                <h2>Test AJAX data:</h2>
-                <pre>
-                    <code className='subStyle'>
-                        { JSON.stringify(this.state.ajaxData, null, '\t') }
-                    </code>
-                </pre>
+            <div className={joinClassNames('App', className)} {...props}>
+                <SearchSessionScreen />
             </div>
         );
     }

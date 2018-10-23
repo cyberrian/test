@@ -1,7 +1,27 @@
 {
     "presets": [
+        ["env", {
+            "targets": {
+              "browsers": [
+                "Chrome >= 52",
+                "FireFox >= 44",
+                "Safari >= 7",
+                "Explorer 11",
+                "last 4 Edge versions"
+              ]
+            }
+          }],
         "react",
         "es2015",
         "stage-2"
+    ],
+    "ignore": [
+        "node_modules"
+    ],
+    "plugins": [
+        "syntax-flow",
+        "transform-class-properties",
+        "transform-object-rest-spread",
+        "transform-flow-strip-types"
     ]
 }

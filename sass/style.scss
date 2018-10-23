@@ -1,8 +1,232 @@
-.testStyle {
-    background-color: beige;
+$text-font-size: small;
+$header-font-size: medium;
+$border-color: #ddd;
+$text-color: #999; // color for text
+$input-text-color: #777; // color for text within input
+$input-text-color-disabled: #999; // disabled input text color
+$primary-color: #04A0D4; // color for "primary UI elements" which needs to stand out
+$secondary-color: #BBB; // subdued color for "secondary UI elements" which does not need to stand out
+$input-padding: 8px 10px; // padding for inputs e.g. input, select, button and labels alongside inputs
 
-    .subStyle {
-        background-color: yellow;
+%borders-on { // turns on borders
+    border: 1px solid $border-color;
+}
+
+%rounded-corners {
+    @extend %borders-on;
+    border-radius: 2px;
+}
+
+%flex-space-between {
+    display: flex;
+    justify-content: space-between; // adds horizontal space between children
+}
+
+body {
+    background-color: #F9F9F9;
+}
+
+hr {
+    @extend %borders-on;
+    background-color: $border-color;
+}
+
+input, select, button {
+    @extend %rounded-corners;
+    font-size: $text-font-size;
+    padding: $input-padding;
+    color: $input-text-color;
+
+    &[disabled] {
+        color: $input-text-color-disabled;
     }
 }
-  
+
+input[type=text] {
+    &::placeholder {
+        color: $secondary-color;
+    }
+}
+
+select {
+    background-color: #EFEFEF;
+
+    option {
+        &:first-child {
+            margin-top: 10px;
+        }
+        background-color: white;
+    }
+}
+
+/////////////////////
+// Component styles
+.App {
+    // Global app styles
+    margin: 10px;
+    font-family: sans-serif;
+    font-size: $text-font-size;
+    color: $text-color;
+
+    .primary {
+        color: $primary-color;
+    }
+
+    .secondary {
+        color: $secondary-color;
+    }
+
+    .error {
+        color: #EE5566;
+        font-weight: bold;
+
+        &.align-right {
+            text-align: right;
+        }
+    }
+
+    // Common component styles
+    .Header {
+        @extend %flex-space-between;
+        align-items: flex-end; // vertically align bottom
+        & > .heading {
+            font-size: $header-font-size;
+        }
+    }
+
+    .Body {
+        @extend %flex-space-between;
+        min-height: 250px;
+    }
+
+    .Footer {
+        @extend %flex-space-between;
+        align-items: flex-start; // top-align children
+        margin-top: 10px;
+    }
+
+    .Button {
+        // buttons with single char labels shouldn't be too narrow (e.g. "minus" button which removes a PredicateInputGroup)
+        // so set more left and right padding
+        padding-left: 15px;
+        padding-right: 15px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold; // based on screenshots, non-primary "white" buttons have bold text
+        background-color: white;
+
+        &.primary {
+            font-weight: normal;
+            color: white;
+            background-color: $primary-color;
+        }
+
+        &[disabled] {
+            background-color: #D5D5D5;
+        }
+
+        &:hover {
+            &:not([disabled]) { // ignore hover over style for disabled buttons
+                // NOTE:
+                // text-shadow has a similar effect to "font-weight: bold" 
+                // but the later can make the button wider and shift the position on the screen which is not desirable.
+                text-shadow: 0 0 1px white; // for primary buttons, make text bold
+
+                &:not(.primary) {
+                    background-color: #EFEFEF; // for secondary buttons, change background color
+                }
+            }
+        }
+    }
+
+    .InputGroup {
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        // add vertical spacing between other .InputGroup
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        &.align-right {
+            justify-content: flex-end; // right-align
+        }
+
+        & > * {
+            // set horizontal spacing between children
+            margin-left: 5px;
+            margin-right: 5px;
+            
+            // remove far left and right margins
+            &:first-child {
+                margin-left: 0;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .SearchResultTable {
+        border-collapse: collapse;
+        border: 1px solid $border-color;
+
+        thead,tr:nth-child(even) {
+            background-color: white;
+        }
+
+        td,th{
+            padding: 5px;
+            border: 1px solid $border-color;
+
+            &.string {
+                text-align: left;
+            }
+
+            &.number {
+                text-align: right;
+            }
+        }
+    }
+
+    .predicateInputLabel {
+        background-color: #EDEFF5;
+        border: 1px solid #EDEFF5; // to align label height with surrounding inputs which have borders
+        font-size: smaller;
+        color: #8894A9;
+        padding: $input-padding;
+    }
+
+    // Screen styles
+    .SearchSessionScreen {
+        min-width: 600px;
+
+        // Make these buttons wider based on screenshots
+        & .andButton {
+            //width: 85px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        & .savePresetButton {
+            // width: 134px;
+            padding-left: 35px;
+            padding-right: 35px;
+        }
+        
+        & .searchButton {
+            //width: 168px;
+            padding-left: 70px;
+            padding-right: 70px;
+        }
+
+        & .sqlQueryInput {
+            width: 100%;
+            height: 4em;
+            border: $border-color;
+            color: $text-color;
+        }
+    }
+}
