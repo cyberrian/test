@@ -39,7 +39,7 @@ const numberComparators = [
 ];
 
 /**
- * Describes the order and metadata of the number comparator.
+ * Describes the order and metadata of the string comparator.
  */
 const stringComparators = [
     {
